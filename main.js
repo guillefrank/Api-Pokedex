@@ -1,29 +1,39 @@
 let form = document.forms["form"];
+var pokemonId=7;
+
 
 form.onsubmit = function (e) {
   e.preventDefault();
-  let seleccion = document.form.nombrePokemon.value.toLowerCase();
-  pokemonId = seleccion;   
-  buscarPokemon();
+  let pokemonName = document.form.nombrePokemon.value.toLowerCase();
   
+  buscarPokemon(pokemonName);
 };
 let obtenerNombre = document.getElementById("nombre");
 let obtenerHabilidades = document.getElementById("habilidades");
 let pokefoto = document.getElementById("pokefoto");
-
 let estadofoto = true;
-function buscarPokemon() {  
- imgatras = "https://img.pokemondb.net/sprites/black-white/anim/back-normal/"+ pokemonId +".gif";
- imgfrente ="https://img.pokemondb.net/sprites/black-white/anim/normal/"+ pokemonId +".gif"; 
-  pokefoto.setAttribute("src",imgfrente);
-
-  fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonId)
-    .then((response) => response.json())
+function buscarPokemon(pokemonName) {
+  fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonName)
+    .then((response) => {
+      if (!response.ok) throw Error(response.status);
+      return response;
+    })
+    .then((pokemon)=> pokemon.json())
+    .catch(error => alert("No se encuentra el pokemon "+pokemonName+" eso no es muy pokeamigo de tu parte"))
     .then((pokemon) => {
-      
-      obtenerNombre.innerHTML = pokemonId;
-
-      let textoNombre = document.createTextNode(pokemon.name.toUpperCase());
+      pokemonName=pokemon.name.toLowerCase()
+      pokemonId=pokemon.id;
+      imgatras =
+        "https://img.pokemondb.net/sprites/black-white/anim/back-normal/" +
+        pokemonName +
+        ".gif";
+      imgfrente =
+        "https://img.pokemondb.net/sprites/black-white/anim/normal/" +
+        pokemonName +
+        ".gif";
+        
+      pokefoto.setAttribute("src", imgfrente);
+      obtenerNombre.innerHTML = pokemonName;
       let listaOrdenadaHabilidades = document.getElementById("habilidades");
       while (listaOrdenadaHabilidades.hasChildNodes()) {
         listaOrdenadaHabilidades.removeChild(
@@ -46,8 +56,6 @@ function buscarPokemon() {
     });
 }
 
-
-
 $("#pokefoto").click(function () {
   if (estadofoto == true) {
     $("#pokefoto").attr("src", imgatras);
@@ -57,3 +65,19 @@ $("#pokefoto").click(function () {
     estadofoto = true;
   }
 });
+
+$( "#pokefoto" ).hover(function() {
+ $(this).addClass("grande");
+},
+function(){
+  $(this).removeClass("grande");
+});
+
+$(".anterior").click(function(){
+  pokemonId--
+  buscarPokemon(pokemonId);
+})
+$(".sgte").click(function(){
+  pokemonId++
+  buscarPokemon(pokemonId);
+})
