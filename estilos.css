@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  color: var(--bs-body-color);
+  text-align: var(--bs-body-text-align);
+  background-color: #f2ef13;
+}
+#nombre {
+  text-align: left;
+  margin: 2%;
+}
+.pokeimg {  
+  margin-left: 35%;
+    width: 100px;
+  height: 100px;
+  text-align: center;
+}
+.pokeimg img{
+  background-size: contain;
+}
+
+.fit-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.carta {
+  background-image: url("img/pokedex.png");
+
+  background-size: contain;
+  background-position: center;
+  border-radius: 5px;
+  border: 1px solid #999;
+  background-repeat: no-repeat;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#nombre {
+  text-align: right;
+  margin-right: 15%;
+}
+#titulo {
+  margin-left: 5%;
+}
+ul {
+  list-style: none;
+  text-align: left;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-left: 5%;
+}
+.navbar-nav {
+  margin-right: auto;
+  margin-left: auto;
+}
